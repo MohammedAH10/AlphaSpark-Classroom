@@ -1,0 +1,236 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %} All Classes | AlphaSpark Classroom {% endblock %}
+
+{% block content %}
+
+<style>
+    :root {
+        --electric-blue: #0066FF;
+        --milk-orange: #FFB347;
+        --electric-blue-dark: #0052CC;
+        --milk-orange-dark: #FF9F1C;
+        --white: #FFFFFF;
+        --text-dark: #333333;
+    }
+
+    .all-classes-header {
+        background: linear-gradient(135deg, var(--electric-blue) 0%, var(--milk-orange) 100%);
+        color: var(--white);
+        padding: 40px 30px;
+        border-radius: 12px;
+        margin: 30px 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .all-classes-header h1 {
+        margin: 0;
+        font-weight: 800;
+        font-size: 2.5rem;
+    }
+
+    .all-classes-header p {
+        margin: 10px 0 0 0;
+        opacity: 0.9;
+        font-size: 1.1rem;
+    }
+
+    .user-info {
+        background-color: var(--white);
+        padding: 25px;
+        border-radius: 12px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-left: 4px solid var(--electric-blue);
+    }
+
+    .user-info h3 {
+        color: var(--electric-blue);
+        margin: 0 0 10px 0;
+        font-weight: 700;
+    }
+
+    .user-info p {
+        color: var(--text-dark);
+        margin: 0;
+        font-size: 1rem;
+    }
+
+    .class-list {
+        background-color: var(--white);
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+    }
+
+    .class-list h3 {
+        color: var(--milk-orange);
+        margin: 0 0 20px 0;
+        font-weight: 700;
+        padding-bottom: 15px;
+        border-bottom: 2px solid var(--milk-orange);
+    }
+
+    .class-item {
+        padding: 15px 20px;
+        margin-bottom: 15px;
+        background: linear-gradient(135deg, #E3F2FD 0%, #FFE8CC 100%);
+        border-radius: 8px;
+        border-left: 4px solid var(--electric-blue);
+        transition: all 0.3s ease;
+    }
+
+    .class-item:hover {
+        transform: translateX(10px);
+        box-shadow: 0 4px 12px rgba(0, 102, 255, 0.2);
+    }
+
+    .class-item h4 {
+        color: var(--electric-blue);
+        margin: 0;
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: var(--text-dark);
+    }
+
+    .empty-state i {
+        font-size: 4rem;
+        color: var(--milk-orange);
+        margin-bottom: 20px;
+    }
+
+    .empty-state h3 {
+        color: var(--electric-blue);
+        margin-bottom: 10px;
+    }
+
+    .empty-state a {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 30px;
+        background: linear-gradient(135deg, var(--electric-blue) 0%, var(--milk-orange) 100%);
+        color: var(--white);
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .empty-state a:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 102, 255, 0.3);
+    }
+
+    /* Tablet Styles */
+    @media (max-width: 992px) {
+        .all-classes-header h1 {
+            font-size: 2rem;
+        }
+
+        .all-classes-header {
+            padding: 35px 25px;
+        }
+
+        .class-list {
+            padding: 25px;
+        }
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+        .all-classes-header {
+            margin: 20px 0;
+            padding: 30px 20px;
+        }
+
+        .all-classes-header h1 {
+            font-size: 1.8rem;
+        }
+
+        .all-classes-header p {
+            font-size: 1rem;
+        }
+
+        .user-info {
+            padding: 20px;
+        }
+
+        .class-list {
+            padding: 20px;
+        }
+
+        .class-item {
+            padding: 12px 15px;
+        }
+
+        .class-item h4 {
+            font-size: 1.1rem;
+        }
+    }
+
+    /* Small Mobile Styles */
+    @media (max-width: 480px) {
+        .all-classes-header h1 {
+            font-size: 1.5rem;
+        }
+
+        .user-info h3,
+        .class-list h3 {
+            font-size: 1.2rem;
+        }
+
+        .class-item {
+            padding: 10px 12px;
+        }
+
+        .class-item h4 {
+            font-size: 1rem;
+        }
+    }
+</style>
+
+<div class="all-classes-header">
+    <h1><i class="fas fa-graduation-cap"></i> All Classes</h1>
+    <p>Browse and manage your classroom experience</p>
+</div>
+
+<div class="user-info">
+    <h3><i class="fas fa-user"></i> Welcome, {{ user.name }}!</h3>
+    <p>Here's an overview of all your classes</p>
+</div>
+
+<div class="class-list">
+    <h3><i class="fas fa-book"></i> Your Classes</h3>
+    
+    {% if room %}
+        {% for r in room %}
+        <div class="class-item">
+            <h4>{{ r.name }}</h4>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="empty-state">
+            <i class="fas fa-chalkboard"></i>
+            <h3>No Classes Found</h3>
+            <p>You haven't joined or created any classes yet.</p>
+            {% if user.is_teacher %}
+                <a href="{% url 'create_class' %}">
+                    <i class="fas fa-plus-circle"></i> Create Your First Class
+                </a>
+            {% else %}
+                <a href="#" data-toggle="modal" data-target="#joinClass">
+                    <i class="fas fa-sign-in-alt"></i> Join a Class
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

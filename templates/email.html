@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlphaSpark Classroom - Join Class</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #F0F4F8 0%, #E8EFF5 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #FFFFFF;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .email-header {
+            background: linear-gradient(135deg, #0066FF 0%, #FFB347 100%);
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .email-header h2 {
+            color: #FFFFFF;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .email-header h3 {
+            color: #FFFFFF;
+            font-size: 1.2rem;
+            font-weight: 500;
+            opacity: 0.95;
+        }
+
+        .email-body {
+            padding: 40px 30px;
+        }
+
+        .email-body h5 {
+            color: #333333;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            font-weight: 400;
+        }
+
+        .email-body strong {
+            color: #0066FF;
+            font-weight: 700;
+        }
+
+        .code-container {
+            background: linear-gradient(135deg, #E3F2FD 0%, #FFE8CC 100%);
+            border-left: 4px solid #0066FF;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .code-container h4 {
+            color: #333333;
+            font-size: 1rem;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .code {
+            background-color: #FFFFFF;
+            color: #0066FF;
+            font-size: 2rem;
+            font-weight: 800;
+            padding: 15px 30px;
+            border-radius: 8px;
+            display: inline-block;
+            letter-spacing: 3px;
+            box-shadow: 0 4px 12px rgba(0, 102, 255, 0.2);
+            font-family: 'Courier New', monospace;
+        }
+
+        .email-footer {
+            background-color: #F8F9FA;
+            padding: 25px 30px;
+            text-align: center;
+            border-top: 1px solid #E0E0E0;
+        }
+
+        .email-footer p {
+            color: #666666;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #0066FF 0%, #FFB347 100%);
+            color: #FFFFFF;
+            padding: 14px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-top: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 102, 255, 0.4);
+        }
+
+        /* Mobile styles */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .email-header {
+                padding: 30px 20px;
+            }
+
+            .email-header h2 {
+                font-size: 1.6rem;
+            }
+
+            .email-header h3 {
+                font-size: 1rem;
+            }
+
+            .email-body {
+                padding: 30px 20px;
+            }
+
+            .email-body h5 {
+                font-size: 1rem;
+            }
+
+            .code-container {
+                padding: 20px;
+            }
+
+            .code {
+                font-size: 1.5rem;
+                padding: 12px 20px;
+                letter-spacing: 2px;
+            }
+
+            .email-footer {
+                padding: 20px;
+            }
+
+            .cta-button {
+                padding: 12px 24px;
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Small mobile styles */
+        @media (max-width: 400px) {
+            .email-header h2 {
+                font-size: 1.4rem;
+            }
+
+            .code {
+                font-size: 1.3rem;
+                padding: 10px 15px;
+            }
+
+            .cta-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <h2>AlphaSpark Classroom</h2>
+            <h3>Join The Class Using Code Below</h3>
+        </div>
+
+        <div class="email-body">
+            <h5>
+                Hi Student, Greetings!<br />
+                <strong>{{ user.teachers.name }}</strong> wants you to join their class now.<br />
+                Copy the code below and paste it in the JOIN SECTION box.
+            </h5>
+
+            <div class="code-container">
+                <h4>Your Class Code:</h4>
+                <div class="code">{{ code }}</div>
+            </div>
+
+            <center>
+                <a href="#" class="cta-button">Join Class Now</a>
+            </center>
+        </div>
+
+        <div class="email-footer">
+            <p>AlphaSpark Classroom - Igniting your Tech Future</p>
+            <p style="margin-top: 10px; font-size: 0.85rem; color: #999999;">
+                This is an automated email. Please do not reply.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

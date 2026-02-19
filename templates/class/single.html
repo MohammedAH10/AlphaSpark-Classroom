@@ -1,0 +1,520 @@
+{% extends 'class/base.html' %}
+
+{% block class_link %}
+<div class="navbar-nav ml-auto">
+    <a class="nav-item nav-link active" href="{% url 'single' room.id %}">
+        <i class="fas fa-bars"></i> Stream<span class="sr-only">(current)</span>
+    </a>
+    <a class="nav-item nav-link" href="#">
+        <i class="fas fa-file-signature"></i> Files
+    </a>
+    <a class="nav-item nav-link" href="{% url 'people' room.id %}">
+        <i class="fas fa-users"></i> People
+    </a>
+    <a class="nav-item nav-link" href="" data-toggle="modal" data-target="#exampleModal">
+        Leave Class <i class="fas fa-sign-out-alt"></i>
+    </a>
+</div>
+{% endblock %}
+
+{% block css %}
+:root {
+    --electric-blue: #0066FF;
+    --milk-orange: #FFB347;
+    --electric-blue-dark: #0052CC;
+    --milk-orange-dark: #FF9F1C;
+    --white: #FFFFFF;
+    --text-dark: #333333;
+}
+
+/* Main Header Box */
+.main_box {
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--electric-blue) 0%, var(--milk-orange) 100%);
+    overflow: hidden;
+    padding: 50px 40px;
+    position: relative;
+    color: var(--white);
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.main_box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.3;
+    z-index: 0;
+}
+
+.main_box h2,
+.main_box p,
+.main_box h5 {
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.main_box h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.main_box p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+    margin-bottom: 15px;
+}
+
+.main_box h5 {
+    color: var(--white);
+    font-weight: 600;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 6px;
+}
+
+/* File Box */
+.filebox {
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.filebox h5 {
+    color: var(--electric-blue);
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.filebox p {
+    color: var(--text-dark);
+    margin-bottom: 15px;
+}
+
+.filebox a {
+    color: var(--milk-orange);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.filebox a:hover {
+    color: var(--milk-orange-dark);
+}
+
+/* Send Box */
+.sendbox {
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.sendbox img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid var(--electric-blue);
+    object-fit: cover;
+}
+
+.sendbox form {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+}
+
+.sendbox .form-control {
+    flex: 1;
+    padding: 12px 16px;
+    border: 2px solid var(--electric-blue);
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.sendbox .form-control:focus {
+    outline: none;
+    border-color: var(--milk-orange);
+    box-shadow: 0 0 0 3px rgba(255, 179, 71, 0.2);
+}
+
+.sendbox button {
+    background: linear-gradient(135deg, var(--electric-blue) 0%, var(--milk-orange) 100%);
+    color: var(--white);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+}
+
+.sendbox button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 102, 255, 0.3);
+}
+
+/* Stream Posts */
+.stream {
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.stream:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.stream img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2px solid var(--milk-orange);
+    object-fit: cover;
+}
+
+.stream h5 {
+    color: var(--text-dark);
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.stream h5 strong {
+    color: var(--electric-blue);
+}
+
+.stream p {
+    color: var(--text-dark);
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
+.stream > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.stream > div p {
+    color: #999999;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.stream hr {
+    border: none;
+    border-top: 1px solid #E0E0E0;
+    margin: 15px 0;
+}
+
+.stream > a {
+    color: var(--milk-orange);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.stream > a:hover {
+    color: var(--milk-orange-dark);
+}
+
+/* Comment Section */
+.collapse .card {
+    border: 2px solid var(--electric-blue);
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.collapse .card-body {
+    padding: 15px;
+}
+
+.collapse form {
+    display: flex;
+    gap: 10px;
+}
+
+.collapse .form-control {
+    padding: 10px 14px;
+    border: 2px solid #E0E0E0;
+    border-radius: 6px;
+}
+
+.collapse .form-control:focus {
+    border-color: var(--milk-orange);
+    box-shadow: 0 0 0 3px rgba(255, 179, 71, 0.2);
+}
+
+.collapse .btn-primary {
+    background: linear-gradient(135deg, var(--electric-blue) 0%, var(--milk-orange) 100%);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Messages */
+.messages {
+    position: fixed;
+    top: 90px;
+    right: 20px;
+    z-index: 200;
+    max-width: 400px;
+    width: 90%;
+}
+
+.alert {
+    background-color: var(--milk-orange);
+    color: var(--text-dark);
+    border: none;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-dark);
+    opacity: 0.7;
+}
+
+/* Modal Styles */
+.modal-content {
+    border-radius: 12px;
+}
+
+.modal-header {
+    background: linear-gradient(135deg, var(--electric-blue) 0%, var(--milk-orange) 100%);
+    color: var(--white);
+    border-bottom: none;
+}
+
+.modal-body h4 {
+    color: var(--text-dark);
+}
+
+.modal-footer .btn-info {
+    background-color: var(--electric-blue);
+    border: none;
+}
+
+.modal-footer .btn-danger {
+    background-color: var(--milk-orange-dark);
+    border: none;
+}
+
+/* Tablet Styles */
+@media (max-width: 992px) {
+    .main_box {
+        padding: 40px 30px;
+        min-height: 220px;
+    }
+
+    .main_box h2 {
+        font-size: 2rem;
+    }
+
+    .messages {
+        max-width: 350px;
+    }
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .main_box {
+        padding: 30px 20px;
+        min-height: 200px;
+    }
+
+    .main_box h2 {
+        font-size: 1.6rem;
+    }
+
+    .main_box p {
+        font-size: 1rem;
+    }
+
+    .sendbox {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .sendbox img {
+        align-self: center;
+    }
+
+    .sendbox form {
+        flex-direction: column;
+    }
+
+    .sendbox button {
+        width: 100%;
+    }
+
+    .messages {
+        top: 70px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+
+    .collapse form {
+        flex-direction: column;
+    }
+
+    .collapse .btn-primary {
+        width: 100%;
+    }
+
+    /* Stack sidebar on mobile */
+    .col-3,
+    .col-9 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .filebox {
+        margin-bottom: 20px;
+    }
+}
+
+/* Small Mobile Styles */
+@media (max-width: 480px) {
+    .main_box {
+        padding: 25px 15px;
+    }
+
+    .main_box h2 {
+        font-size: 1.4rem;
+    }
+
+    .stream img,
+    .sendbox img {
+        width: 40px;
+        height: 40px;
+    }
+}
+{% endblock %}
+
+{% block content %}
+<div class="messages">
+    {% for message in messages %}
+        <div class="alert alert-primary" {% if message.tags %}class="{{ message.tags }}"{% endif %}>
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="row mt-3">
+    <div class="col-11 main_box" style="margin: 0 auto; background-image: url('{{ room.cover.url }}');">
+        <h2>{{ room.name }}</h2>
+        <p>{{ room.details }}</p>
+        <h5>Code: {{ room.code }}</h5>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-11" style="margin: 0 auto;">
+        <div class="row">
+            <div class="col-lg-3 col-md-12">
+                <div class="filebox">
+                    <h5>Upcoming Files</h5>
+                    <p>No File yet</p>
+                    <a href="#" class="text-right">View All</a>
+                </div>
+            </div>
+            
+            <div class="col-lg-9 col-md-12">
+                <div class="sendbox">
+                    <img src="{{ user.students.photo.url }}" alt="User Avatar">
+                    <form action="{% url 'stream_create' room.id %}" method="POST">
+                        {% csrf_token %}
+                        <input type="text" name="post" class="form-control" placeholder="Share something with the class..." required>
+                        <button type="submit"><i class="fas fa-rocket"></i></button>
+                    </form>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    {% for s in stream %}
+                    <div class="stream">
+                        <div>
+                            <img src="{{ s.user.students.photo.url }}" alt="{{ s.user.students.name }}">
+                            <h5><strong>{{ s.user.students.name }}</strong></h5>
+                            <p>{{ s.created_at|timesince }} ago</p>
+                        </div>
+                        
+                        <p style="padding: 0.5rem 0;">{{ s.post }}</p>
+                        
+                        <hr>
+                        <a href="#" data-toggle="collapse" data-target="#collapseExample{{ s.id }}" aria-expanded="false" aria-controls="collapseExample{{ s.id }}">
+                            <i class="fas fa-reply"></i> Reply
+                        </a>
+                    </div>
+                    
+                    <!-- Reply Box -->
+                    <div class="collapse" id="collapseExample{{ s.id }}" style="margin-left: 30px;">
+                        <div class="card card-body">
+                            <form action="{% url 'comment_create' s.id %}" method="POST">
+                                {% csrf_token %}
+                                <input type="text" name="comment" class="form-control" placeholder="Add Comment" required>
+                                <button class="btn btn-primary" type="submit">Add Comment</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Leave Class Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Leave Already?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h4>Are you sure you want to leave this class?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">No, Stay</button>
+                <a href="{% url 'leave' room.id %}" class="btn btn-danger">Yes, Leave</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

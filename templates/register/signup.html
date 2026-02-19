@@ -1,0 +1,313 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<style>
+    :root {
+        --electric-blue: #0066FF;
+        --milk-orange: #FFB347;
+        --electric-blue-dark: #0052CC;
+        --milk-orange-light: #FFCC80;
+        --white: #FFFFFF;
+        --light-bg: #F8F9FA;
+        --text-dark: #333333;
+    }
+
+    .signup-container {
+        min-height: 90vh;
+        padding: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .messages {
+        position: fixed;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        width: 90%;
+        max-width: 500px;
+    }
+
+    .alert {
+        background-color: var(--milk-orange);
+        color: var(--text-dark);
+        border: none;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .signup-section {
+        flex: 1;
+        min-width: 300px;
+        padding: 30px;
+        background-color: var(--white);
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .signup-section.teacher {
+        border-top: 4px solid var(--electric-blue);
+    }
+
+    .signup-section.student {
+        background: linear-gradient(135deg, #F8F9FA 0%, #E3F2FD 100%);
+        border-top: 4px solid var(--milk-orange);
+    }
+
+    .signup-section h2 {
+        color: var(--text-dark);
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    .signup-section.teacher h2 {
+        color: var(--electric-blue);
+    }
+
+    .signup-section.student h2 {
+        color: var(--milk-orange);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 2px solid #E0E0E0;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--electric-blue);
+        box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+    }
+
+    .signup-section.student .form-control:focus {
+        border-color: var(--milk-orange);
+        box-shadow: 0 0 0 3px rgba(255, 179, 71, 0.1);
+    }
+
+    .btn-primary {
+        width: 100%;
+        padding: 14px;
+        background-color: var(--electric-blue);
+        color: var(--white);
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+    }
+
+    .btn-primary:hover {
+        background-color: var(--electric-blue-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3);
+    }
+
+    .signup-section.student .btn-primary {
+        background-color: var(--milk-orange);
+        color: var(--white);
+    }
+
+    .signup-section.student .btn-primary:hover {
+        background-color: #FF9F1C;
+        box-shadow: 0 4px 12px rgba(255, 179, 71, 0.3);
+    }
+
+    hr {
+        margin: 25px 0;
+        border: none;
+        border-top: 1px solid #E0E0E0;
+    }
+
+    .text-center {
+        text-align: center;
+        color: var(--text-dark);
+        font-size: 0.95rem;
+    }
+
+    .text-center a {
+        color: var(--electric-blue);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+    }
+
+    .text-center a:hover {
+        color: var(--electric-blue-dark);
+        text-decoration: underline;
+    }
+
+    .signup-section.student .text-center a {
+        color: var(--milk-orange);
+    }
+
+    .signup-section.student .text-center a:hover {
+        color: #FF9F1C;
+    }
+
+    .close {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--text-dark);
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
+    }
+
+    .close:hover {
+        opacity: 1;
+    }
+
+    /* Tablet styles */
+    @media (max-width: 992px) {
+        .signup-container {
+            padding: 15px;
+        }
+
+        .signup-section {
+            padding: 25px;
+        }
+
+        .signup-section h2 {
+            font-size: 1.5rem;
+        }
+    }
+
+    /* Mobile styles */
+    @media (max-width: 768px) {
+        .signup-container {
+            padding: 10px;
+            gap: 15px;
+        }
+
+        .signup-section {
+            padding: 20px;
+            min-width: 100%;
+        }
+
+        .signup-section h2 {
+            font-size: 1.4rem;
+        }
+
+        .form-control {
+            padding: 10px 12px;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            padding: 12px;
+            font-size: 1rem;
+        }
+
+        .messages {
+            top: 60px;
+            width: 95%;
+        }
+    }
+
+    /* Small mobile styles */
+    @media (max-width: 480px) {
+        .signup-section {
+            padding: 15px;
+        }
+
+        .signup-section h2 {
+            font-size: 1.3rem;
+        }
+
+        .form-control {
+            font-size: 0.9rem;
+        }
+    }
+</style>
+
+<div class="signup-container">
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert alert-primary" {% if message.tags %}class="{{ message.tags }}"{% endif %}>
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="signup-section teacher">
+        <h2>Sign Up as an Instructor</h2>
+        
+        <form action="{% url 'signup' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="text" name="name" class="form-control" placeholder="Type Your Name" required>
+            </div>
+            <div class="form-group">
+                <input type="email" name="username" class="form-control" placeholder="Type Your Email" required>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password1" class="form-control" placeholder="Password" required>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password2" class="form-control" placeholder="Confirm Password" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+        </form>
+        
+        <hr>
+        
+        <div class="text-center">
+            Do you already have an account? <a href="{% url 'login' %}">Login here</a>
+        </div>
+    </div>
+
+    <div class="signup-section student">
+        <h2>Sign Up as A Student</h2>
+        
+        <form action="{% url 'student_register' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="text" name="name" class="form-control" placeholder="Type Your Name" required>
+            </div>
+            <div class="form-group">
+                <input type="email" name="username" class="form-control" placeholder="Type Your Email" required>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password1" class="form-control" placeholder="Type Password" required>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password2" class="form-control" placeholder="Confirm Your Password" required>
+            </div>
+            <div class="form-group">
+                <input type="file" name="image" class="form-control" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+        </form>
+        
+        <hr>
+        
+        <div class="text-center">
+            Do you already have an account? <a href="{% url 'login' %}">Login here</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

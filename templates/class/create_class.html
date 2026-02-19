@@ -1,0 +1,264 @@
+{% extends 'base/base.html' %}
+{% block title %} Create Class | AlphaSpark Classroom {% endblock %}
+
+{% block content %}
+
+<style>
+    :root {
+        --electric-blue: #0066FF;
+        --milk-orange: #FFB347;
+        --electric-blue-dark: #0052CC;
+        --milk-orange-dark: #FF9F1C;
+        --white: #FFFFFF;
+        --light-bg: #F8F9FA;
+        --text-dark: #333333;
+    }
+
+    .create-class-wrapper {
+        min-height: 85vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .create-class-container {
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 1100px;
+        width: 100%;
+        background-color: var(--white);
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .form-section {
+        flex: 1;
+        min-width: 300px;
+        padding: 50px 40px;
+        background: linear-gradient(135deg, #E3F2FD 0%, #FFE8CC 100%);
+    }
+
+    .image-section {
+        flex: 1;
+        min-width: 300px;
+        background: linear-gradient(135deg, var(--electric-blue) 0%, var(--milk-orange) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+        position: relative;
+    }
+
+    .image-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0.1;
+    }
+
+    .image-section img {
+        max-width: 100%;
+        height: auto;
+        position: relative;
+        z-index: 1;
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+        color: var(--electric-blue);
+        font-size: 2rem;
+        margin-bottom: 30px;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid var(--electric-blue);
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+        background-color: var(--white);
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--milk-orange);
+        box-shadow: 0 0 0 3px rgba(255, 179, 71, 0.2);
+    }
+
+    .form-control::placeholder {
+        color: #999999;
+    }
+
+    textarea.form-control {
+        resize: vertical;
+        min-height: 150px;
+        font-family: inherit;
+    }
+
+    .btn-primary {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(135deg, var(--electric-blue) 0%, var(--milk-orange) 100%);
+        color: var(--white);
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 102, 255, 0.3);
+    }
+
+    .info-box {
+        background-color: rgba(0, 102, 255, 0.1);
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        border-left: 4px solid var(--electric-blue);
+    }
+
+    .info-box p {
+        margin: 0;
+        color: var(--text-dark);
+        font-size: 0.9rem;
+    }
+
+    .info-box i {
+        color: var(--milk-orange);
+        margin-right: 8px;
+    }
+
+    /* Tablet styles */
+    @media (max-width: 992px) {
+        .form-section {
+            padding: 40px 30px;
+        }
+
+        h2 {
+            font-size: 1.7rem;
+        }
+
+        .image-section {
+            min-height: 300px;
+        }
+    }
+
+    /* Mobile styles */
+    @media (max-width: 768px) {
+        .create-class-wrapper {
+            padding: 10px;
+        }
+
+        .create-class-container {
+            flex-direction: column;
+        }
+
+        .form-section {
+            padding: 30px 20px;
+            order: 1;
+        }
+
+        .image-section {
+            order: 2;
+            min-height: 250px;
+            padding: 30px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            padding: 12px 14px;
+            font-size: 0.95rem;
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+        }
+
+        .btn-primary {
+            padding: 12px;
+            font-size: 1rem;
+        }
+    }
+
+    /* Small mobile styles */
+    @media (max-width: 480px) {
+        .form-section {
+            padding: 25px 15px;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+        }
+
+        .image-section {
+            min-height: 200px;
+            padding: 20px;
+        }
+
+        .form-control {
+            font-size: 0.9rem;
+        }
+    }
+</style>
+
+<div class="create-class-wrapper">
+    <div class="create-class-container">
+        <div class="form-section">
+            <h2>Create New Class</h2>
+            
+            <div class="info-box">
+                <p>
+                    <i class="fas fa-lightbulb"></i>
+                    Create a classroom where students can learn and collaborate
+                </p>
+            </div>
+            
+            <form action="{% url 'create_class' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" name="name" class="form-control" placeholder="Class Name (e.g., Web Development)" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="unit" class="form-control" placeholder="Class Unit (e.g., Frontend, Backend)" required>
+                </div>
+                <div class="form-group">
+                    <textarea name="detail" class="form-control" placeholder="Describe your class, learning objectives, and what students will gain..." required></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-plus-circle"></i> Create Class
+                </button>
+            </form>
+        </div>
+
+        <div class="image-section">
+            {% load static %}
+            <img src="{% static 'design/classroom.png' %}" alt="Classroom Illustration">
+        </div>
+    </div>
+</div>
+
+{% endblock %}

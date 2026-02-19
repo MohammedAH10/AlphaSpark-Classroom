@@ -1,0 +1,273 @@
+{% extends 'base/base.html' %} 
+{% load static %} 
+{% block title %} AlphaSpark CLS {% endblock %} 
+{% block content %}
+
+<style>
+    :root {
+        --electric-blue: #0066FF;
+        --milk-orange: #FFB347;
+        --electric-blue-dark: #0052CC;
+        --milk-orange-light: #FFCC80;
+        --white: #FFFFFF;
+        --light-bg: #F8F9FA;
+        --text-dark: #333333;
+    }
+
+    .hero-container {
+        min-height: 90vh;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 40px 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .hero-content {
+        flex: 1;
+        min-width: 300px;
+        padding: 30px;
+    }
+
+    .hero-content h5 {
+        color: var(--milk-orange);
+        font-size: 1.3rem;
+        font-weight: 500;
+        margin-bottom: 15px;
+        letter-spacing: 0.5px;
+    }
+
+    .hero-content h1 {
+        color: var(--electric-blue);
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        line-height: 1.2;
+    }
+
+    .hero-content span {
+        color: var(--text-dark);
+        font-size: 1.2rem;
+        line-height: 1.8;
+        display: block;
+        margin-bottom: 30px;
+    }
+
+    .hero-content span strong {
+        color: var(--electric-blue);
+        font-weight: 700;
+    }
+
+    hr {
+        margin: 30px 0;
+        border: none;
+        border-top: 3px solid var(--milk-orange);
+        width: 100px;
+    }
+
+    .btn-group {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        padding: 14px 32px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .btn-info {
+        background-color: var(--milk-orange);
+        color: var(--white);
+        box-shadow: 0 4px 12px rgba(255, 179, 71, 0.3);
+    }
+
+    .btn-info:hover {
+        background-color: #FF9F1C;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 16px rgba(255, 179, 71, 0.4);
+    }
+
+    .btn-primary {
+        background-color: var(--electric-blue);
+        color: var(--white);
+        box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3);
+    }
+
+    .btn-primary:hover {
+        background-color: var(--electric-blue-dark);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 16px rgba(0, 102, 255, 0.4);
+    }
+
+    .hero-image {
+        flex: 1;
+        min-width: 300px;
+        padding: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .hero-image img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% {
+            transform: translateY(0px);
+        }
+        50% {
+            transform: translateY(-20px);
+        }
+    }
+
+    /* Decorative elements */
+    .hero-content::before {
+        content: '';
+        position: absolute;
+        top: -50px;
+        left: -50px;
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(circle, var(--milk-orange-light) 0%, transparent 70%);
+        opacity: 0.3;
+        border-radius: 50%;
+        z-index: -1;
+    }
+
+    /* Tablet styles */
+    @media (max-width: 992px) {
+        .hero-container {
+            padding: 30px 15px;
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+        }
+
+        .hero-content h5 {
+            font-size: 1.2rem;
+        }
+
+        .hero-content span {
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            font-size: 1rem;
+        }
+    }
+
+    /* Mobile styles */
+    @media (max-width: 768px) {
+        .hero-container {
+            flex-direction: column;
+            padding: 20px 10px;
+            min-height: auto;
+        }
+
+        .hero-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 2rem;
+        }
+
+        .hero-content h5 {
+            font-size: 1.1rem;
+        }
+
+        .hero-content span {
+            font-size: 1rem;
+        }
+
+        hr {
+            margin: 20px auto;
+        }
+
+        .btn-group {
+            justify-content: center;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .hero-image {
+            padding: 20px;
+            order: -1;
+        }
+
+        .hero-content::before {
+            display: none;
+        }
+    }
+
+    /* Small mobile styles */
+    @media (max-width: 480px) {
+        .hero-content h1 {
+            font-size: 1.7rem;
+        }
+
+        .hero-content h5 {
+            font-size: 1rem;
+        }
+
+        .hero-content span {
+            font-size: 0.95rem;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 0.95rem;
+        }
+
+        .btn-group {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="hero-container">
+    <div class="hero-content">
+        <h5>Welcome to</h5>
+        <h1>AlphaSpark Classroom</h1>
+        <span>
+            Where you can <strong>Enjoy</strong><br />
+            Your <strong>Study</strong>
+        </span>
+        <hr />
+        <div class="btn-group">
+            <a href="" class="btn btn-info">Student</a>
+            <a href="" class="btn btn-primary">Instructor</a>
+        </div>
+    </div>
+    <div class="hero-image">
+        <img src="{% static 'others/classroom3.png' %}" alt="Classroom Illustration" />
+    </div>
+</div>
+
+{% endblock %}

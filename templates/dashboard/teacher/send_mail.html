@@ -1,0 +1,337 @@
+{% extends 'base/base.html' %}
+{% block title %} Send Email | AlphaSpark Classroom {% endblock %}
+{% block content %}
+
+<style>
+    :root {
+        --electric-blue: #0066FF;
+        --milk-orange: #FFB347;
+        --electric-blue-dark: #0052CC;
+        --milk-orange-dark: #FF9F1C;
+        --white: #FFFFFF;
+        --light-bg: #F8F9FA;
+        --text-dark: #333333;
+    }
+
+    .email-wrapper {
+        min-height: 85vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .email-container {
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 1100px;
+        width: 100%;
+        background-color: var(--white);
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .email-form-section {
+        flex: 1;
+        min-width: 300px;
+        padding: 50px 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .email-image-section {
+        flex: 1;
+        min-width: 300px;
+        background: linear-gradient(135deg, var(--milk-orange) 0%, var(--electric-blue) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+        position: relative;
+    }
+
+    .email-image-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0.1;
+    }
+
+    .email-image-section img {
+        max-width: 100%;
+        height: auto;
+        position: relative;
+        z-index: 1;
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+        color: var(--electric-blue);
+        font-size: 2rem;
+        margin-bottom: 30px;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    .messages {
+        margin-bottom: 20px;
+    }
+
+    .alert {
+        background-color: var(--milk-orange);
+        color: var(--text-dark);
+        border: none;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        position: relative;
+    }
+
+    .close {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--text-dark);
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
+    }
+
+    .close:hover {
+        opacity: 1;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid #E0E0E0;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: var(--electric-blue);
+        box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+    }
+
+    .form-control::placeholder {
+        color: #999999;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .btn {
+        flex: 1;
+        padding: 14px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .btn-primary {
+        background-color: var(--electric-blue);
+        color: var(--white);
+    }
+
+    .btn-primary:hover {
+        background-color: var(--electric-blue-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 102, 255, 0.3);
+    }
+
+    .btn-success {
+        background-color: var(--milk-orange);
+        color: var(--white);
+    }
+
+    .btn-success:hover {
+        background-color: var(--milk-orange-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(255, 179, 71, 0.3);
+    }
+
+    .info-box {
+        background: linear-gradient(135deg, #E3F2FD 0%, #FFE8CC 100%);
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+        border-left: 4px solid var(--electric-blue);
+    }
+
+    .info-box p {
+        margin: 0;
+        color: var(--text-dark);
+        font-size: 0.95rem;
+    }
+
+    .info-box i {
+        color: var(--milk-orange);
+        margin-right: 8px;
+    }
+
+    /* Tablet styles */
+    @media (max-width: 992px) {
+        .email-form-section {
+            padding: 40px 30px;
+        }
+
+        h2 {
+            font-size: 1.7rem;
+        }
+
+        .email-image-section {
+            min-height: 300px;
+        }
+    }
+
+    /* Mobile styles */
+    @media (max-width: 768px) {
+        .email-wrapper {
+            padding: 10px;
+        }
+
+        .email-container {
+            flex-direction: column;
+        }
+
+        .email-form-section {
+            padding: 30px 20px;
+            order: 1;
+        }
+
+        .email-image-section {
+            order: 2;
+            min-height: 250px;
+            padding: 30px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            padding: 12px 14px;
+            font-size: 0.95rem;
+        }
+
+        .button-group {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            font-size: 0.95rem;
+        }
+
+        .info-box {
+            padding: 15px;
+        }
+    }
+
+    /* Small mobile styles */
+    @media (max-width: 480px) {
+        .email-form-section {
+            padding: 25px 15px;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+        }
+
+        .email-image-section {
+            min-height: 200px;
+            padding: 20px;
+        }
+
+        .form-control {
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            font-size: 0.9rem;
+        }
+    }
+</style>
+
+<div class="email-wrapper">
+    <div class="email-container">
+        <div class="email-form-section">
+            <h2>Send Email Invitation</h2>
+            
+            <div class="info-box">
+                <p>
+                    <i class="fas fa-info-circle"></i>
+                    Send class invitation codes to students via email
+                </p>
+            </div>
+
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-primary" {% if message.tags %}class="{{ message.tags }}"{% endif %}>
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <form action="{% url 'send' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" class="form-control" name="code" placeholder="Type Seven Characters Code here" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" name="email" placeholder="Student Email Address" required>
+                </div>
+                
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary" value="True" name="con">
+                        <i class="fab fa-rev"></i> Send & Continue
+                    </button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-home"></i> Send & Go Back
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="email-image-section">
+            {% load static %}
+            <img src="{% static 'others/classroom1.png' %}" alt="Classroom">
+        </div>
+    </div>
+</div>
+
+{% endblock %}

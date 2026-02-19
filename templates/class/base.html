@@ -1,0 +1,459 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+            integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        />
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="{% static 'css/min.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/custom.css' %}" />
+
+        <style>
+            :root {
+                --electric-blue: #0066ff;
+                --milk-orange: #ffb347;
+                --electric-blue-dark: #0052cc;
+                --electric-blue-light: #3385ff;
+                --milk-orange-dark: #ff9f1c;
+                --milk-orange-light: #ffcc80;
+                --white: #ffffff;
+                --light-bg: #f8f9fa;
+                --text-dark: #333333;
+                --text-muted: #666666;
+                --border-color: #e0e0e0;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                background-color: var(--light-bg);
+                color: var(--text-dark);
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .container {
+                flex: 1;
+            }
+
+            /* Navbar Styles */
+            .navbar {
+                background: linear-gradient(
+                    135deg,
+                    var(--electric-blue) 0%,
+                    var(--milk-orange) 100%
+                );
+                padding: 15px 0;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+
+            .navbar-brand .logo {
+                height: 45px;
+                width: auto;
+                transition: transform 0.3s ease;
+            }
+
+            .navbar-brand .logo:hover {
+                transform: scale(1.05);
+            }
+
+            .navbar-toggler {
+                border: 2px solid var(--white);
+                background-color: rgba(255, 255, 255, 0.2);
+            }
+
+            .navbar-toggler-icon {
+                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+            }
+
+            .navbar-nav {
+                align-items: center;
+            }
+
+            .nav-item {
+                margin: 0 5px;
+            }
+
+            .nav-link {
+                color: var(--white);
+                font-weight: 500;
+                padding: 8px 16px;
+                border-radius: 6px;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+
+            .nav-link:hover,
+            .nav-link.active {
+                background-color: rgba(255, 255, 255, 0.2);
+                color: var(--white);
+            }
+
+            .dropdown-menu {
+                background-color: var(--white);
+                border: none;
+                border-radius: 8px;
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            }
+
+            .dropdown-item {
+                color: var(--text-dark);
+                padding: 10px 20px;
+                transition: all 0.3s ease;
+            }
+
+            .dropdown-item:hover {
+                background: linear-gradient(
+                    135deg,
+                    var(--electric-blue) 0%,
+                    var(--milk-orange) 100%
+                );
+                color: var(--white);
+            }
+
+            /* Modal Styles */
+            .modal-content {
+                border: none;
+                border-radius: 12px;
+            }
+
+            .modal-header {
+                background: linear-gradient(
+                    135deg,
+                    var(--electric-blue) 0%,
+                    var(--milk-orange) 100%
+                );
+                color: var(--white);
+                border-bottom: none;
+                padding: 20px 25px;
+            }
+
+            .modal-title {
+                font-weight: 600;
+            }
+
+            .modal-header .close {
+                color: var(--white);
+                opacity: 0.9;
+                text-shadow: none;
+            }
+
+            .modal-body {
+                padding: 25px;
+            }
+
+            .modal-body .form-control {
+                padding: 12px 15px;
+                border: 2px solid var(--electric-blue);
+                border-radius: 8px;
+            }
+
+            .modal-body .form-control:focus {
+                border-color: var(--milk-orange);
+                box-shadow: 0 0 0 3px rgba(255, 179, 71, 0.2);
+            }
+
+            .btn-secondary {
+                background-color: var(--text-dark);
+                border: none;
+                padding: 10px 20px;
+                border-radius: 6px;
+            }
+
+            .btn-primary {
+                background: linear-gradient(
+                    135deg,
+                    var(--electric-blue) 0%,
+                    var(--milk-orange) 100%
+                );
+                border: none;
+                padding: 10px 20px;
+                border-radius: 6px;
+            }
+
+            /* Footer Styles */
+            .mainfooter {
+                background: linear-gradient(
+                    135deg,
+                    var(--electric-blue) 0%,
+                    var(--milk-orange) 100%
+                );
+                color: var(--white);
+                padding: 30px 0;
+                margin-top: 50px;
+                box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+            }
+
+            .mainfooter h5 {
+                color: var(--white);
+                font-weight: 700;
+            }
+
+            .mainfooter p {
+                margin: 0;
+                opacity: 0.9;
+            }
+
+            .mainfooter a {
+                color: var(--white);
+                text-decoration: none;
+                transition: opacity 0.3s ease;
+            }
+
+            .mainfooter a:hover {
+                opacity: 0.8;
+            }
+
+            /* Mobile Responsive */
+            @media (max-width: 768px) {
+                .navbar {
+                    padding: 10px 0;
+                }
+
+                .navbar-brand .logo {
+                    height: 38px;
+                }
+
+                .navbar-collapse {
+                    background-color: rgba(0, 0, 0, 0.05);
+                    margin-top: 15px;
+                    padding: 15px;
+                    border-radius: 8px;
+                }
+
+                .nav-item {
+                    margin: 5px 0;
+                }
+
+                .nav-link {
+                    justify-content: center;
+                }
+
+                .mainfooter .col-4,
+                .mainfooter .col-5,
+                .mainfooter .col-3 {
+                    text-align: center;
+                    margin-bottom: 15px;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .navbar-brand .logo {
+                    height: 34px;
+                }
+
+                .mainfooter {
+                    padding: 20px 0;
+                    font-size: 0.9rem;
+                }
+            }
+        </style>
+
+        <title>{% block title %}AlphaSpark Classroom{% endblock %}</title>
+        <style>
+            {% block css %} {% endblock %}
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-md navbar-light">
+            <div class="container">
+                <a class="navbar-brand" href="{% url 'index' %}">
+                    <img
+                        src="{% static 'others/logo.png' %}"
+                        class="logo"
+                        alt="AlphaSpark Logo"
+                    />
+                </a>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    {% block class_link %} {% endblock %}
+
+                    <ul class="navbar-nav ml-auto">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                id="navbarDropdown"
+                                role="button"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                            >
+                                <i class="fas fa-plus"></i>
+                            </a>
+                            <div
+                                class="dropdown-menu"
+                                aria-labelledby="navbarDropdown"
+                            >
+                                {% if user.is_teacher %}
+                                <a
+                                    class="dropdown-item"
+                                    href="{% url 'create_class' %}"
+                                    >Create Class</a
+                                >
+                                {% else %}
+                                <a
+                                    class="dropdown-item"
+                                    href="#"
+                                    data-toggle="modal"
+                                    data-target="#joinClass"
+                                    >Join Class</a
+                                >
+                                {% endif %}
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'logout' %}" class="nav-link">
+                                <i class="fas fa-power-off"></i> Logout
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'signup' %}">
+                                <i class="fas fa-user-plus"></i> Sign Up
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">
+                                <i class="fas fa-sign-in-alt"></i> Login
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Join Class Modal -->
+        <div
+            class="modal fade"
+            id="joinClass"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="joinClassTitle"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="joinClassTitle">
+                            Paste The Code to Join
+                        </h5>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'join' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="code"
+                                    placeholder="Enter the Code"
+                                    required
+                                />
+                            </div>
+                            <div
+                                style="
+                                    display: flex;
+                                    gap: 10px;
+                                    justify-content: flex-end;
+                                "
+                            >
+                                <button
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-dismiss="modal"
+                                >
+                                    Close
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    Join
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" style="z-index: 2">
+            {% block content %} {% endblock %}
+        </div>
+
+        <footer class="mainfooter" role="contentinfo">
+            <div class="footer-middle">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4 col-12">
+                            <h5>AlphaSpark Classroom</h5>
+                        </div>
+                        <div class="col-md-5 col-12">
+                            <p>
+                                Made by <strong>MohammedAH10</strong> | Version:
+                                <strong>1.0.0</strong>
+                            </p>
+                        </div>
+                        <div class="col-md-3 col-12">
+                            <!--<p>Source Code on Github <a href="https://github.com/yeazin/Zooming-cls"><i class="fab fa-github"></i></a></p>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Optional JavaScript -->
+        <script
+            src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"
+        ></script>
+    </body>
+</html>
