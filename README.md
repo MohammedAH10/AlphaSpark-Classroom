@@ -5,13 +5,7 @@
  [![git](https://badgen.net/badge/icon/git?icon=git&label)](https://git-scm.com) [![Visual Studio](https://badgen.net/badge/icon/visualstudio?icon=visualstudio&label)](https://visualstudio.microsoft.com) [![Docker](https://badgen.net/badge/icon/docker?icon=docker&label)](https://https://docker.com/)
  
 <h1> Zooming cls ( Google Classroom Clone )</h2>
-<img src="readme/home.png">
 <hr>
-
-
-
-
-
 
  </div>
 <br>
